@@ -1,0 +1,87 @@
+@startuml AD_DCGHM_ThemMoi
+!pragma layout smetana
+title Activity Diagram: Thêm mới chứng từ điều chỉnh giá hàng mua
+
+start
+:Kiểm tra quyền truy cập;
+if (Có quyền?) then (Không)
+  stop
+else (Có)
+  :Người dùng chọn nút "Thêm mới" từ màn hình danh sách;
+  :Hệ thống mở màn hình **SCR_DCGHM_ThemMoi**;
+
+  :Người dùng chọn Loại nghiệp vụ, Lý do điều chỉnh;
+  :Người dùng hoàn tấtcc trường thông tin nghiệp vụ chung;
+  :Người dùng hoàn tấtcc trường thông tin trong các phiếu (nếu có);
+
+  switch (Thao tác?)
+
+    case (Chọn từ popup)
+      :Người dùng bấm nút "Chọn chứng từ";
+      :Hệ thống mở popup **SCR_DCGHM_PopupChonChungTu**;
+      :Người dùng nhập điều kiện tìm kiếm;
+      :Người dùng bấm nút "Tìm kiếm";
+      :Hệ thống hiển thị danh sách hàng hóa/dịch vụ\ntừ chứng từ mua hàng/mua dịch vụ;
+      :Người dùng tick checkbox hàng hóa/dịch vụ cần điều chỉnh;
+      switch (Thao tác)
+        case (Xác nhận)
+          :Người dùng bấm nút "Xác nhận";
+          :Hệ thống thêm hàng hóa/dịch vụ vào tab Chi tiết điều chỉnh;
+        case (Hủy/đóng)
+          :Đóng popup, không thay đổi thông tin;
+      endswitch
+    case (Thêm thủ công)
+      :Người dùng bấm nút "Thêm dòng";
+      :Hệ thống thêm dòng mới vào grid;
+      :Người dùng nhập thông tin hàng hóa/dịch vụ;
+      note right
+        Validate: Số lượng > 0
+        Validate: Đơn giá >= 0
+      end note
+    case (Sửa/xóa các dòng)
+      :Người dùng sửa/xóa các dòng chi tiết;
+      :Hệ thống cập nhật thông tin;
+
+  endswitch
+
+  :Hệ thống tự động tính toán các trường thông tin khác;
+
+
+  switch (Người dùng chọn action?)
+
+    case (Lưu nháp)
+      :Hệ thống validate dữ liệu;
+      if (Validate pass?) then (Fail)
+        :Hiển thị lỗi, focus vào trường lỗi nếu có;
+      else (Pass)
+        :Lưu chứng từ trạng thái "Chưa ghi sổ";
+        :Hiển thị thông báo thành công;
+        :Đóng màn hình, quay lại danh sách;
+      endif
+
+    case (Lưu và ghi sổ)
+      :Hệ thống validate dữ liệu;
+      if (Validate pass?) then (Fail)
+        :Hiển thị lỗi, focus vào trường lỗi nếu có;
+      else (Pass)
+        :Gọi use case **UC_DCGHM_GhiSo**;
+        :Hiển thị thông báo thành công;
+        :Đóng màn hình, quay lại danh sách;
+      endif
+
+    case (Hủy/Đóng)
+      if (Dữ liệu thay đổi?) then (Có)
+        :Hiển thị popup xác nhận;
+        if (Người dùng xác nhận?) then (Có)
+          :Đóng form, quay lại danh sách;
+        endif
+      else (Không)
+        :Đóng form, quay lại danh sách;
+      endif
+
+  endswitch
+
+endif
+
+stop
+@enduml

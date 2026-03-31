@@ -1,0 +1,73 @@
+@startuml AD_DCGHM_BoGhiSo
+!pragma layout smetana
+title Activity Diagram: Bỏ ghi sổ chứng từ điều chỉnh giá hàng mua
+
+start
+:Người dùng truy cập màn hình danh sách hoặc chi tiết
+:Kiểm tra quyền;
+if (Có quyền?) then (Không)
+  :Không hiển thị tính năng bỏ ghi sổ;
+  stop
+else (Có)
+  :Người dùng bấm nút "Bỏ ghi sổ";
+  :Hiển thị popup xác nhận;
+  switch (Xác nhận)
+    case (Hủy)
+      :Đóng popup, không có thay đổi;
+      stop
+    case (Xác nhận)
+      :Tiếp tục;
+  endswitch
+
+  partition "Validate trước khi bỏ ghi sổ" {
+    if (Hình thức = "Điều chỉnh công nợ"? và Đã đối trừ thủ công?) then (Có)
+      :Hiển thị thông báo lỗi;
+      stop
+    endif
+  }
+
+  partition "Rollback nghiệp vụ ghi sổ" {
+
+    :Xóa bút toán hạch toán;
+    :Bỏ qua chứng từ trên các báo cáo;
+    if (Điều chỉnh giá trị hàng nhập kho = true?) then (Có)
+      partition "Hoàn tác giá trị tồn kho" {
+        if (Lý do điều chỉnh khi ghi sổ?) then (Giảm giá)
+          :Cộng lại giá trị tồn kho;
+        else (Tăng giá)
+          :Trừ lại giá trị tồn kho;
+        endif
+        :Hoàn tác giá vốn hàng tồn kho;
+      }
+    endif
+
+    switch (Hoàn tác công nợ)
+      case (Điều chỉnh công nợ)
+        if (Đã đối trừ trực tiếp) then (Đúng)
+          :Hoàn tác công nợ cho chứng từ gốc;
+        endif
+        if (Tổng tiền thanh toán > 0?) then (Có - Tăng giá)
+          :Giảm công nợ nhà cung cấp;
+        else (Không - Giảm giá)
+          :Tăng công nợ nhà cung cấp;
+        endif
+      case (Thanh toán ngay)
+        :Cập nhật quỹ tiền mặt tiền gửi\n(Hoàn ứng chứng từ thu/chi);
+    endswitch
+
+    :Cập nhật trạng thái → "Chưa ghi sổ";
+
+  }
+
+  :Hiển thị thông báo bỏ ghi sổ thành công;
+
+  if (Gọi từ Chi tiết?) then (Có)
+    :Refresh màn hình chi tiết;
+  else (Danh sách)
+    :Refresh danh sách;
+  endif
+
+endif
+
+stop
+@enduml
