@@ -1,0 +1,83 @@
+@startuml ldm-TienMatTienGui
+!pragma layout smetana
+left to right direction
+
+entity ChungTuChiTien
+{
+    *Id: uuid <<PK>> - ID bản ghi
+    ChungTuMuaHangId: uuid <<FK>> - ID chứng từ mua hàng (reference đến ENT_ChungTuMuaHang)
+    TaiKhoanCo: uuid! <<FK>> - ID tài khoản có (reference đến ENT_HeThongTaiKhoan)
+    ChungTuDieuChinhGiaHangMua: uuid <<FK>> - ID chứng từ điều chỉnh giá hàng mua (reference đến ENT_ChungTuDieuChinhGiaHangMua)
+
+    ' Thông tin chứng từ chi tiền
+    HinhThucThanhToan: enum - Phiếu chi, Ủy nhiệm chi, Séc tiền mặt, Séc chuyển khoản
+    SoChungTu: string! - Số chứng từ
+    NgayChungTu: date! - Ngày chứng từ
+    NgayHachToan: date! - Ngày hạch toán
+    MoTa: string - Nội dung thanh toán/lý do chi tiền
+
+    ' Thông tin loại tiền và tỷ giá
+    LoaiTienId: uuid <<FK>> - ID loại tiền tệ (reference đến ENT_LoaiTien)
+    TyGia: numeric - Tỷ giá
+
+    ' Thông tin nhà cung cấp
+    MaNhaCungCapId: uuid! <<FK>> - ID nhà cung cấp
+    TenNhaCungCap: string! - Tên nhà cung cấp
+    DiaChi: string - Địa chỉ nhà cung cấp
+
+    ' Thông tin thanh toán cho phiếu chi
+    NguoiNhanTien: string - Người nhận tiền
+
+    ' Thông tin thanh toán cho ủy nhiệm chi / séc CK
+    TaiKhoanNganHangChiId: uuid! <<FK>> - ID tài khoản ngân hàng chi (reference đến ENT_TaiKhoanNganHang)
+    TenNganHangChi: string - Tên ngân hàng
+    TaiKhoanNganHangThuId: uuid <<FK>> - ID tài khoản ngân hàng thu (reference đến ENT_TaiKhoanNganHang)
+    TenNganHangThu: string - Tên ngân hàng
+
+    ' Thông tin thanh toán cho séc tiền mặt
+    NguoiLinhTien: string - Người lĩnh tiền
+    SoGiayTo: string - Số giấy tờ tùy thân
+    NgayCap: date - Ngày cấp giấy tờ
+    NoiCap: string - Nơi cấp giấy tờ
+
+    ' Thông tin thanh toán
+    TongGiaTriChiTien: numeric - Tổng giá trị chi tiền
+    TongGiaTriChiTienQuyDoi: numeric - Tổng giá trị chi tiền
+}
+
+entity ChungTuThuTien
+{
+    *Id: uuid <<PK>> - ID bản ghi
+
+    ' Tham chiếu chứng từ liên quan
+    ChungTuTraLaiHangMuaId: uuid <<FK>> - ID chứng từ trả lại hàng mua (reference đến ENT_ChungTuTraLaiHangMua)
+    ChungTuDieuChinhGiaHangMua: uuid <<FK>> - ID chứng từ điều chỉnh giá hàng mua (reference đến ENT_ChungTuDieuChinhGiaHangMua)
+
+    ' Thông tin chứng từ
+    SoChungTu: string - Số chứng từ
+    NgayChungTu: date - Ngày chứng từ
+    NgayHachToan: date - Ngày hạch toán
+    MoTa: string - Diễn giải
+
+    ' Thông tin loại tiền và tỷ giá
+    LoaiTienId: uuid <<FK>> - ID loại tiền tệ (reference đến ENT_LoaiTien)
+    TyGia: numeric! - Tỷ giá
+
+    ' Thông tin nhà cung cấp
+    NhaCungCapId: uuid <<FK>> - ID nhà cung cấp (reference đến ENT_NhaCungCap)
+    TenNhaCungCap: string - Tên nhà cung cấp
+    NguoiNop: string - Người nộp tiền
+    DiaChi: string - Địa chỉ
+
+    ' Thông tin giấy báo có
+    TaiKhoanNganHangId: uuid <<FK>> - ID tài khoản ngân hàng (reference đến ENT_TaiKhoanNganHang)
+    TenNganHang: string <<FK>> - Tên ngân hàng (reference đến ENT_NganHang)
+
+    ' Nhóm thông tin tổng hợp
+    TongGiaTriThuTien: numeric - Tổng giá trị thu tiền
+    TongGiaTriThuTienQuyDoi: numeric - Tổng giá trị thu tiền quy đổi
+    TongGiaTriPhanBo: numeric - Tổng giá trị phân bổ
+    TongGiaTriPhanBoQuyDoi: numeric - Tổng giá trị phân bổ quy đổi
+}
+
+@enduml

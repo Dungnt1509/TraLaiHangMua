@@ -1,0 +1,330 @@
+@startuml erd-tongquan
+
+'==============================================================================
+' DANH SÁCH CÁC ENTITIES
+'==============================================================================
+
+'------------------------------------------------------------------------------
+' Danh mục chung
+'------------------------------------------------------------------------------
+entity NganHang
+entity CaNhan
+entity ToChuc
+entity NhanVien
+entity ChucDanh
+entity KhachHangCaNhan
+entity KhachHangToChuc
+entity NhaCungCapToChuc
+entity NhaCungCapCaNhan
+entity NhomKhachHangNhaCungCap
+entity TaiKhoanNganHang
+entity DieuKhoanThanhToan
+entity LoaiHinhKinhDoanh
+entity LoaiVatTu
+entity NhomVatTu
+entity VatTu
+entity HangHoa
+entity DichVu
+entity HeThongTaiKhoan
+entity LoaiTien
+entity NganhNghe
+entity ChungTu
+entity LoaiChungTu
+entity CongTrinh
+entity LoaiCongTrinh
+entity LinhVucHoatDong
+entity DonViTinh
+entity DonViQuyDoiVatTu
+entity ThueSuatGTGT
+entity ThueTieuThuDB
+entity ThueTaiNguyen
+entity DonVi
+entity LoaiDonVi
+entity BoPhan
+entity Tenant
+entity DonViKeToan
+entity LoaiDonViKeToan
+entity ThongTu
+entity LoaiDonViKeToan_ThongTu
+entity ThongTu_TaiKhoan
+entity NhomHopDong
+entity ChungTuLienQuan
+entity FileDinhKem
+entity LyDoTangGiam
+entity NhomCongCuDungCu
+
+'------------------------------------------------------------------------------
+' Module Mua hàng
+'------------------------------------------------------------------------------
+entity ChungTuMuaHang
+entity ChungTuMuaDichVu
+entity PhanBoChiPhiMuaHang
+entity HoaDonMua
+entity ChiTietChungTuMuaHang
+entity ChiTietChungTuMuaDichVu
+entity ChiPhiMuaHang
+entity PhanBoHoaDon
+
+' Trả lại hàng mua
+entity ChungTuTraLaiHangMua
+entity HoaDonDieuChinh
+entity HoaDonTraLai
+
+' entity ChiTietHoaDonDieuChinh
+' entity ChiTietHoaDonTraLai
+entity ChiTietChungTuTraLaiHangMua
+
+entity PhieuXuatKhoTraLaiHangMua
+
+'------------------------------------------------------------------------------
+' Module Tiền mặt - Tiền gửi
+'------------------------------------------------------------------------------
+entity ChungTuChiTien
+entity ChungTuThuTien
+
+'------------------------------------------------------------------------------
+' Module Kho
+'------------------------------------------------------------------------------
+entity NhomKho
+entity Kho
+entity KhuVucKho
+entity PhieuNhapKho
+
+'------------------------------------------------------------------------------
+' Module Giá thành
+'------------------------------------------------------------------------------
+entity KhoanMucChiPhi
+entity KyTinhGiaThanh
+entity DoDangCuoiKy
+entity DoDangDauKy
+entity PhanBoChiPhi
+entity ChiTietPhanBoChiPhi
+entity HeSoPhanBo
+entity PhanBoChungTu
+entity GiaThanhSanPham
+entity ChungTuGiaThanh
+entity ChiTietChungTuGiaThanh
+entity DoiTuongTapHopChiPhi
+entity CauHinhGiaThanh
+
+'------------------------------------------------------------------------------
+' Module Công cụ dụng cụ
+'------------------------------------------------------------------------------
+entity CongCuDungCu
+entity DonViQuanLyCCDC
+entity ChungTuGoc
+entity HeSoPhanBoCongCuDungCu
+entity PhieuKiemKeCongCuDungCu
+entity ChiTietNguoiKiemKe
+entity ChiTietKiemKeCCDC
+entity PhieuDieuChinhCCDC
+entity ChiTietPhieuDieuChinhCCDC
+entity PhieuDieuChuyenCCDC
+entity ChiTietPhieuDieuChuyenCCDC
+entity PhieuGhiGiamCCDC
+entity ChiTietPhieuGhiGiamCCDC
+entity PhieuPhanBoCCDC
+entity ChiTietPhieuPhanBoCCDC
+entity TamdungPhanBoCCDC
+
+'------------------------------------------------------------------------------
+' Module Tài sản cố định
+'------------------------------------------------------------------------------
+entity LoaiTaiSanCoDinh
+
+'------------------------------------------------------------------------------
+' Module Chi phí trả trước
+'------------------------------------------------------------------------------
+entity PhieuKhaiBaoChiPhiTraTruoc
+entity ChiTietThietLapChiPhiTraTruoc
+entity ChiTietPhanBoChiPhiTraTruoc
+
+'==============================================================================
+' QUAN HỆ GIỮA CÁC ENTITIES
+'==============================================================================
+
+'------------------------------------------------------------------------------
+' Module Danh mục - Quan hệ kế thừa
+'------------------------------------------------------------------------------
+NhaCungCapCaNhan --|> CaNhan
+NhaCungCapToChuc --|> ToChuc
+NhanVien --|> CaNhan
+HangHoa --|> VatTu
+DichVu --|> VatTu
+
+'------------------------------------------------------------------------------
+' Module Danh mục - Quan hệ danh mục
+'------------------------------------------------------------------------------
+NganHang ||--{ TaiKhoanNganHang
+NhomKhachHangNhaCungCap ||--{ KhachHangCaNhan
+NhomKhachHangNhaCungCap ||--{ KhachHangToChuc
+NhomKhachHangNhaCungCap ||--{ NhaCungCapCaNhan
+NhomKhachHangNhaCungCap ||--{ NhaCungCapToChuc
+LoaiVatTu ||--{ VatTu
+NhomVatTu ||--{ VatTu
+VatTu ||--{ HangHoa
+VatTu ||--{ DichVu
+VatTu ||--{ DonViQuyDoiVatTu
+DonViTinh ||--{ DonViQuyDoiVatTu
+HeThongTaiKhoan ||--{ HeThongTaiKhoan
+LoaiDonViKeToan }--{ ThongTu 
+ThongTu ||--{ ThongTu_TaiKhoan
+HeThongTaiKhoan ||--{ ThongTu_TaiKhoan
+LoaiCongTrinh ||--{ CongTrinh
+CongTrinh ||--{ CongTrinh 
+DieuKhoanThanhToan ||--{ KhachHangCaNhan
+DieuKhoanThanhToan ||--{ KhachHangToChuc
+DieuKhoanThanhToan ||--{ NhaCungCapCaNhan
+DieuKhoanThanhToan ||--{ NhaCungCapToChuc
+ChucDanh ||--{ NhanVien
+DonViTinh ||--{ VatTu
+
+'------------------------------------------------------------------------------
+' Module Danh mục - Quan hệ tổ chức
+'------------------------------------------------------------------------------
+ToChuc ||--{ DonVi
+DonVi ||--{ BoPhan
+LoaiDonVi ||--{ DonVi
+Tenant ||--{ HeThongTaiKhoan
+
+'------------------------------------------------------------------------------
+' Module Danh mục - Quan hệ cấu hình đơn vị kế toán
+'------------------------------------------------------------------------------
+LinhVucHoatDong ||--{ DonViKeToan
+NganhNghe ||--{ DonViKeToan
+LoaiDonViKeToan ||--{ DonViKeToan
+ThongTu ||--{ DonViKeToan
+LoaiTien ||--{ DonViKeToan
+
+'------------------------------------------------------------------------------
+' Module Mua hàng - Quan hệ nghiệp vụ
+'------------------------------------------------------------------------------
+ChungTuMuaHang ||--{ ChungTuLienQuan
+ChungTuMuaHang ||--{ ChiTietChungTuMuaHang
+ChungTuMuaHang }--{ HoaDonMua
+ChungTuMuaHang }--{ PhanBoChiPhiMuaHang
+ChungTuMuaHang ||--{ FileDinhKem
+HoaDonMua ||--{ ChiTietChungTuMuaHang
+HoaDonMua ||--{ ChiPhiMuaHang
+
+ChungTuMuaDichVu ||--{ ChiTietChungTuMuaDichVu
+ChungTuMuaDichVu ||--{ ChungTuLienQuan
+ChungTuMuaDichVu }--{ HoaDonMua
+ChungTuMuaDichVu }--{ PhanBoChiPhiMuaHang
+ChungTuMuaDichVu ||--{ FileDinhKem
+HoaDonMua ||--{ ChiTietChungTuMuaDichVu
+
+' Trả lại hàng mua
+ChungTuTraLaiHangMua }--|| HoaDonDieuChinh
+ChungTuTraLaiHangMua }--|| HoaDonTraLai
+ChungTuTraLaiHangMua ||--{ ChiTietChungTuTraLaiHangMua
+
+ChungTuTraLaiHangMua }--{ ChungTuMuaHang
+
+ChungTuTraLaiHangMua ||--|| PhieuXuatKhoTraLaiHangMua
+
+ChungTuTraLaiHangMua }--{ ChungTuThuTien
+
+'------------------------------------------------------------------------------
+' Module Tiền mặt - Tiền gửi - Quan hệ nghiệp vụ
+'------------------------------------------------------------------------------
+ChungTuChiTien ||--{ PhanBoHoaDon
+ChungTuMuaHang ||--{ ChungTuChiTien
+ChungTuMuaDichVu ||--{ ChungTuChiTien
+HoaDonMua ||--{ PhanBoHoaDon
+
+'------------------------------------------------------------------------------
+' Module Kho - Quan hệ nghiệp vụ
+'------------------------------------------------------------------------------
+NhomKho ||--{ Kho
+Kho ||--{ KhuVucKho
+ChungTuMuaHang ||--{ PhieuNhapKho
+PhieuNhapKho ||--{ ChiTietChungTuMuaHang
+
+'------------------------------------------------------------------------------
+' Module Công cụ dụng cụ - Quan hệ danh sách CCDC
+'------------------------------------------------------------------------------
+HeThongTaiKhoan ||--{ CongCuDungCu
+
+'------------------------------------------------------------------------------
+' Module Công cụ dụng cụ - Quan hệ quản lý CCDC
+'------------------------------------------------------------------------------
+CongCuDungCu }--|| VatTu
+CongCuDungCu }--{ HeThongTaiKhoan
+CongCuDungCu }--||  NhomCongCuDungCu
+CongCuDungCu ||--{ DonViQuanLyCCDC
+CongCuDungCu ||--{ ChungTuGoc
+CongCuDungCu ||--{ HeSoPhanBoCongCuDungCu
+CongCuDungCu ||--{ TamdungPhanBoCCDC
+
+'------------------------------------------------------------------------------
+' Module Công cụ dụng cụ - Quan hệ nghiệp vụ Điều chỉnh CCDC
+'------------------------------------------------------------------------------
+PhieuDieuChinhCCDC ||--{ ChiTietPhieuDieuChinhCCDC
+CongCuDungCu }--{ PhieuDieuChinhCCDC
+ChungTuLienQuan }--{ PhieuDieuChinhCCDC
+
+'------------------------------------------------------------------------------
+' Module Công cụ dụng cụ - Quan hệ nghiệp vụ Điều chuyển CCDC
+'------------------------------------------------------------------------------
+PhieuDieuChuyenCCDC ||--{ ChiTietPhieuDieuChuyenCCDC
+CongCuDungCu }--{ PhieuDieuChuyenCCDC
+DonVi }--{ PhieuDieuChuyenCCDC
+
+'------------------------------------------------------------------------------
+' Module Công cụ dụng cụ - Quan hệ nghiệp vụ Ghi giảm CCDC
+'------------------------------------------------------------------------------
+PhieuGhiGiamCCDC ||--{ ChiTietPhieuGhiGiamCCDC
+CongCuDungCu }--{ PhieuGhiGiamCCDC
+DonVi }--{ PhieuGhiGiamCCDC
+HeThongTaiKhoan ||--{ ChiTietPhieuGhiGiamCCDC
+
+'------------------------------------------------------------------------------
+' Module Công cụ dụng cụ - Quan hệ nghiệp vụ Phân bổ CCDC
+'------------------------------------------------------------------------------
+PhieuPhanBoCCDC ||--{ ChiTietPhieuPhanBoCCDC
+CongCuDungCu }--{ PhieuPhanBoCCDC
+
+'------------------------------------------------------------------------------
+' Module Công cụ dụng cụ - Quan hệ nghiệp vụ Kiểm kê CCDC
+'------------------------------------------------------------------------------
+PhieuKiemKeCongCuDungCu ||--{ ChiTietNguoiKiemKe
+PhieuKiemKeCongCuDungCu ||--{ ChiTietKiemKeCCDC
+DonVi }--{ PhieuKiemKeCongCuDungCu
+CongCuDungCu }--{ ChiTietKiemKeCCDC
+
+'------------------------------------------------------------------------------
+' Module Giá thành - Quan hệ nghiệp vụ
+'------------------------------------------------------------------------------
+KyTinhGiaThanh ||--{ DoDangDauKy
+KyTinhGiaThanh ||--{ DoDangCuoiKy
+KyTinhGiaThanh ||--{ PhanBoChiPhi
+KyTinhGiaThanh ||--{ GiaThanhSanPham
+
+KyTinhGiaThanh ||--{ ChungTuGiaThanh
+
+PhanBoChiPhi ||--{ ChiTietPhanBoChiPhi
+PhanBoChiPhi ||--{ HeSoPhanBo
+PhanBoChiPhi ||--{ PhanBoChungTu
+
+ChungTuGiaThanh ||--{ ChiTietChungTuGiaThanh
+
+ChiTietChungTuGiaThanh }--|| KhoanMucChiPhi
+ChiTietChungTuGiaThanh }--|| DonVi
+ChiTietChungTuGiaThanh }--|| CongTrinh
+ChiTietChungTuGiaThanh }--|| DoiTuongTapHopChiPhi
+
+'------------------------------------------------------------------------------
+' Module Chi phí trả trước - Quan hệ nghiệp vụ
+'------------------------------------------------------------------------------
+PhieuKhaiBaoChiPhiTraTruoc ||--{ ChiTietThietLapChiPhiTraTruoc
+PhieuKhaiBaoChiPhiTraTruoc ||--{ ChiTietPhanBoChiPhiTraTruoc
+ChungTuChiTien ||--{ PhieuKhaiBaoChiPhiTraTruoc
+ChungTuMuaHang }--{ PhieuKhaiBaoChiPhiTraTruoc
+ChungTuMuaDichVu }--{ PhieuKhaiBaoChiPhiTraTruoc
+LoaiChungTu ||--{ PhieuKhaiBaoChiPhiTraTruoc
+HeThongTaiKhoan }--{ PhieuKhaiBaoChiPhiTraTruoc
+HeThongTaiKhoan }--{ ChiTietThietLapChiPhiTraTruoc
+HeThongTaiKhoan }--{ ChiTietPhanBoChiPhiTraTruoc
+
+@enduml
