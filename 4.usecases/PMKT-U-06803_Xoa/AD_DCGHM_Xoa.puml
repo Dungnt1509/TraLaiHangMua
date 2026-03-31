@@ -1,0 +1,48 @@
+@startuml AD_DCGHM_Xoa
+!pragma layout smetana
+title Activity Diagram: Xóa chứng từ điều chỉnh giá hàng mua
+
+start
+
+:Người dùng vào màn hình danh sách;
+:Kiểm tra quyền;
+
+if (Có quyền?) then (Không)
+  :Không hiển thị tính năng xóa;
+  stop
+else (Có)
+
+  switch (Thao tác)
+
+    case (Xóa 1)
+      :Người dùng bấm nút "Xóa"\ntrên dòng chứng từ;
+
+    case (Xóa nhiều)
+      :Người dùng chọn checkbox\nở các dòng chứng từ;
+      if (Chọn chứng từ đã ghi sổ ?) then (Đúng)
+        :Hiển thị và disable nút xóa nhiều;
+        stop
+      else
+        :Hiển thị và enable nút xóa nhiều;
+        :Người dùng bấm nút xóa nhiều;
+      endif
+
+  endswitch
+
+  :Hiển thị popup xác nhận;
+  switch (Xác nhận)
+    case (Hủy)
+      :Đóng popup, không có thay đổi;
+      stop
+    case (Xác nhận)
+      :Tiếp tục;
+  endswitch
+
+  :Xóa dữ liệu chứng từ và các dữ liệu được tạo lập kèm;
+  :Hiển thị thông báo xóa thành công;
+  :Refresh danh sách;
+
+endif
+
+stop
+@enduml

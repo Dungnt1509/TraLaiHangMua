@@ -1,0 +1,32 @@
+@startuml UC_DCGHM
+!pragma layout smetana
+title Use Case Diagram: Chứng từ điều chỉnh giá hàng mua
+
+'==================== Actors ====================
+actor "Kế toán" as KeToan
+
+'==================== Quản lý chứng từ điều chỉnh giá hàng mua ====================
+package "Quản lý chứng từ điều chỉnh giá hàng mua" as P_DCGHM {
+    usecase "Xem danh sách chứng từ điều chỉnh giá hàng mua" as UC_DCGHM_XemDanhSach
+    usecase "Tìm kiếm chứng từ điều chỉnh giá hàng mua" as UC_DCGHM_TimKiem
+    usecase "Xem chi tiết chứng từ điều chỉnh giá hàng mua" as UC_DCGHM_XemChiTiet
+    usecase "Thêm mới chứng từ điều chỉnh giá hàng mua" as UC_DCGHM_ThemMoi
+    usecase "Sửa chứng từ điều chỉnh giá hàng mua" as UC_DCGHM_Sua
+    usecase "Xóa chứng từ điều chỉnh giá hàng mua" as UC_DCGHM_Xoa
+    usecase "Nhân bản chứng từ điều chỉnh giá hàng mua" as UC_DCGHM_NhanBan
+    usecase "Ghi sổ chứng từ điều chỉnh giá hàng mua" as UC_DCGHM_GhiSo
+    usecase "Bỏ ghi sổ chứng từ điều chỉnh giá hàng mua" as UC_DCGHM_BoGhiSo
+}
+
+'==================== Liên kết Actor → UC ====================
+KeToan -- UC_DCGHM_XemDanhSach
+KeToan -- UC_DCGHM_TimKiem
+KeToan -- UC_DCGHM_XemChiTiet
+KeToan -- UC_DCGHM_ThemMoi
+KeToan -- UC_DCGHM_Sua
+KeToan -- UC_DCGHM_Xoa
+KeToan -- UC_DCGHM_NhanBan
+KeToan -- UC_DCGHM_GhiSo
+KeToan -- UC_DCGHM_BoGhiSo
+
+@enduml

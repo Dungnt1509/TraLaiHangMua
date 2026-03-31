@@ -1,0 +1,82 @@
+@startuml AD_DCGHM_GhiSo
+!pragma layout smetana
+title Activity Diagram: Ghi sổ chứng từ điều chỉnh giá hàng mua
+
+start
+:Kiểm tra quyền;
+if (Có quyền?) then (Không)
+  :Không hiển thị chức năng;
+  stop
+else (Có)
+  switch (Người dùng gọi ghi sổ từ đâu?)
+
+    case (Từ màn hình Thêm mới/Sửa)
+      :Người dùng bấm nút "Lưu và ghi sổ";
+
+    case (Từ màn hình danh sách)
+      :Người dùng bấm nút "Ghi sổ";
+
+  endswitch
+
+  :Hệ thống validate dữ liệu;
+
+  partition "Validate dữ liệu" {
+    if (Có chi tiết điều chỉnh?) then (Không)
+      :Hiển thị thông báo lỗi;
+      stop
+    endif
+
+    if (Tổng tiền thanh toán != 0?) then (Không)
+      :Hiển thị thông báo lỗi;
+      stop
+    endif
+
+    if (Số chứng từ trùng?) then (Có)
+      :Hiển thị thông báo "Số chứng từ này đã tồn tại";
+      stop
+    endif
+  }
+
+  :Lưu chứng từ trạng thái "Đã ghi sổ";
+  :Sinh bút toán hạch toán điều chỉnh giá hàng mua;
+
+  if (Điều chỉnh giá trị hàng nhập kho = true?) then (Có)
+    partition "Điều chỉnh giá trị tồn kho" {
+      if (Lý do điều chỉnh?) then (Giảm giá)
+        :Giá trị mới = Giá trị hiện tại - Σ(Thành tiền quy đổi);
+      else (Tăng giá)
+        :Giá trị mới = Giá trị hiện tại + Σ(Thành tiền quy đổi);
+      endif
+      :Điều chỉnh giá vốn hàng tồn kho;
+    }
+  endif
+
+  switch (Xử lý công nợ)
+    case (Điều chỉnh công nợ)
+      if (Tổng tiền thanh toán > 0?) then (Có - Tăng giá)
+        :Tăng công nợ nhà cung cấp;
+      else (Không - Giảm giá)
+        :Giảm công nợ nhà cung cấp\n(hoặc đối trừ từ chứng từ khác);
+      endif
+    case (Thanh toán ngay)
+      partition "Sinh chứng từ thanh toán" {
+        if (Tổng tiền thanh toán > 0?) then (Có - Tăng giá)
+          :Sinh chứng từ chi tiền\n(Phiếu chi/Ủy nhiệm chi/Séc);
+        else (Không - Giảm giá)
+          :Sinh chứng từ thu tiền\n(Phiếu thu/Giấy báo có);
+        endif
+      }
+  endswitch
+
+  :Hiển thị thông báo thành công;
+
+  if (Gọi từ Thêm mới/Sửa?) then (Có)
+    :Đóng màn hình, quay lại danh sách;
+  else (Danh sách)
+    :Refresh danh sách;
+  endif
+
+endif
+
+stop
+@enduml

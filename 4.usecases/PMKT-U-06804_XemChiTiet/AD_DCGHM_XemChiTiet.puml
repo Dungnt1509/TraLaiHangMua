@@ -1,0 +1,63 @@
+@startuml AD_DCGHM_XemChiTiet
+!pragma layout smetana
+title Activity Diagram: Xem chi tiết chứng từ điều chỉnh giá hàng mua
+
+start
+:Người dùng chọn chứng từ\ntừ màn hình danh sách;
+:Người dùng bấm "Xem" hoặc bấm vào số chứng từ;
+:Hệ thống mở màn hình Xem chi tiết;
+:Hệ thống hiển thị đầy đủ thông tin;
+
+switch (Trạng thái chứng từ)
+
+  case (Chưa ghi sổ)
+    :Hiển thị nút "Chỉnh sửa";
+    :Hiển thị nút "Ghi sổ";
+
+    switch (Người dùng chọn tác vụ)
+
+      case (Chỉnh sửa)
+        :Mở màn hình Sửa (**SCR_DCGHM_Sua**);
+        note right
+          Theo UC_DCGHM_Sua
+        end note
+        :Quay lại và refresh màn hình;
+
+      case (Ghi sổ)
+        note right
+          Gọi UC_DCGHM_GhiSo
+        end note
+        :Lưu chứng từ trạng thái "Đã ghi sổ";
+        :Refresh màn hình;
+
+    endswitch
+
+  case (Đã ghi sổ)
+    :Hiển thị nút "Bỏ ghi sổ";
+
+    switch (Người dùng chọn tác vụ)
+
+      case (Bỏ ghi sổ)
+        note right
+          Gọi UC_DCGHM_BoGhiSo
+        end note
+        :Hiển thị popup xác nhận;
+        if (Người dùng xác nhận?) then (Có)
+          :Cập nhật trạng thái → "Chưa ghi sổ";
+          :Refresh màn hình;
+        else (Hủy)
+          :Đóng popup;
+        endif
+
+    endswitch
+
+endswitch
+
+if (Người dùng chọn "Hủy/Đóng"?) then (Có)
+  :Đóng màn hình, quay lại danh sách;
+else (Không)
+  :Tiếp tục ở màn hình chi tiết;
+endif
+
+stop
+@enduml

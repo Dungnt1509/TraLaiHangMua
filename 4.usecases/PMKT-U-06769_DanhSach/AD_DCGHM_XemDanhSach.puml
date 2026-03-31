@@ -1,0 +1,53 @@
+@startuml AD_DCGHM_XemDanhSach
+!pragma layout smetana
+title Activity Diagram: Xem danh sách chứng từ điều chỉnh giá hàng mua
+
+start
+:Kiểm tra quyền truy cập;
+if (Có quyền?) then (Có)
+
+    :Hiển thị chức năng truy cập danh sách chứng từ điều chỉnh giá hàng mua doanh nghiệp;
+    :Người dùng truy cập chức năng danh sách chứng từ điều chỉnh giá hàng mua doanh nghiệp;
+    :Tải danh sách chứng từ điều chỉnh giá hàng mua doanh nghiệp;
+    :Hiển thị màn hình danh sách (**SCR_DCGHM_DanhSach**);
+
+    switch (Người dùng chọn action?)
+
+        case (Chức năng trên từng dòng)
+            switch (Chọn chức năng?)
+                case (Sửa)
+                    :Sửa thông tin (**AD_DCGHM_Sua**);
+                case (Xóa)
+                    :Xóa chứng từ điều chỉnh giá hàng mua (**AD_DCGHM_Xoa**);
+                case (Nhân bản)
+                    :Nhân bản chứng từ điều chỉnh giá hàng mua (**AD_DCGHM_NhanBan**);
+                case (Bỏ ghi)
+                    :Bỏ ghi chứng từ điều chỉnh giá hàng mua (**AD_DCGHM_BoGhiSo**);
+                case (Ghi sổ)
+                    :Ghi sổ chứng từ điều chỉnh giá hàng mua (**AD_DCGHM_GhiSo**);
+                case (Xem chi tiết)
+                    :Xem chi tiết (**AD_DCGHM_XemChiTiet**);
+            endswitch
+
+        case (Các nút chức năng khác)
+            switch (Chọn chức năng?)
+                case (Thêm mới)
+                    :Thêm mới (**AD_DCGHM_ThemMoi**);
+                case (Tìm kiếm)
+                    :Tìm kiếm trên từng cột và tìm kiếm chung;
+                case (Làm mới)
+                    :Hệ thống làm mới danh sách;
+                case (Sắp xếp theo từng cột)
+                    :Hệ thống sắp xếp lại danh sách theo thứ tự tăng dần/giảm dần của alphabet theo cột được chọn;
+                case (Xóa hàng loạt)
+                    :Xóa chứng từ điều chỉnh giá hàng mua (**AD_DCGHM_Xoa**);
+            endswitch
+
+    endswitch
+
+else (Không)
+  :Ẩn hiển thị chức năng truy cập danh sách chứng từ điều chỉnh giá hàng mua doanh nghiệp;
+endif
+
+stop
+@enduml
